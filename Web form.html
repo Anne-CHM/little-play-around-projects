@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>web form</title>
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <style media="screen">
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        font-weight: lighter;
+        /*font-size: 16px;*/
+      }
+      div.header h1{
+        background-color: #0FA3B1;
+        border-radius: 10px 10px 0 0;
+        color: white;
+        margin: 0 10px;
+        text-align: center;
+      }
+      div.main-form {
+        margin: 0 10px;
+        padding: 10px 20px;
+        border: 1px solid black;
+        border-top: none;
+        box-shadow: 3px 3px 3px #999;
+        font-size: .8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Contact Us!</h1>
+    </div>
+    <div class="main-form">
+      <form class="name-and-email" action="index.html" method="post">
+        <label for="fir-name">First name:</label><br>
+        <input type="text" name="fir-name" placeholder="first name"><br>
+        <label for="la-name">Last name:</label><br>
+        <input type="text" name="la-name" placeholder="last name"><br>
+        <label for="e-mail">E-mail:</label><br>
+        <input type="email" name="e-mail" placeholder="e-mail address">
+      </form>
+      <br>
+      <form class="message" action="index.html" method="post">
+        <label for="message">Message:</label><br>
+        <textarea name="message" cols="50"></textarea>
+      </form>
+      <br>
+      <form class="sex" action="index.html" method="post">
+        <p>Sex:</p>
+        <input type="radio" name="male" value="male">
+        <label for="male">Male</label>
+        <input type="radio" name="femal" value="female">
+        <label for="female">Female</label>
+      </form>
+      <br>
+      <form class="subscribe" action="index.html" method="post">
+        <input type="checkbox" name="updates-notice" checked="checked">
+        <label for="updates-notice">I'd like to receive notices when this website updates.</label>
+        <br>
+        <input type="checkbox" name="pertaining-notice">
+        <label for="pertaining-notice">I'd like to receive notices pertaining to related websites and their services.</label>
+      </form>
+      <br>
+      <button type="button" name="submit">Submit</button>
+    </div>
+  </body>
+</html>
