@@ -1,0 +1,106 @@
+<!-- this is a jQuery tab practice based on LearnCode.academy tutorial. -->
+<!-- watch the Youtube tutorial at https://www.youtube.com/watch?v=1nWrIBB_bMA&list=PLoYCgNOIyGABdI2V8I_SWo22tFpgh2s6_&index=5 -->
+<!-- read the code at http://codepen.io/anon/pen/mJyQez -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>tab panel</title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <style media="screen">
+              body {
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                color: #333;
+              }
+              .tab-panels ul {
+                margin: 0;
+                padding: 0;
+              }
+              .tab-panels ul li {
+                background-color: #999;
+                border-radius: 10px 10px 0 0;
+                color: #fff;
+                font-weight: 200;
+                display: inline-block;
+                list-style-type: none;
+                padding: 3px 10px;
+                cursor: pointer;
+              }
+              .tab-panels ul li:hover {
+                background: #666;
+              }
+              .tab-panels ul li.active {
+                background-color: #666;
+              }
+              .tab-panels .panel {
+                background-color: #ccc;
+                border-radius: 0 0 10px 10px;
+                display: none;
+                padding: 30px;
+              }
+              .tab-panels .panel.active {
+                display: block;
+              }
+        </style>
+    </head>
+      <body>
+        <div class="tab-panels">
+            <ul class="tabs">
+                <li rel="panel1" class="active">panel1</li>
+                <li rel="panel2">panel2</li>
+                <li rel="panel3">panel3</li>
+                <li rel="panel4">panel4</li>
+            </ul>
+            <div id="panel1" class="panel active">
+                content1<br/>
+                content1<br/>
+                content1<br/>
+                content1<br/>
+                content1<br/>
+            </div>
+            <div id="panel2" class="panel">
+                content2<br/>
+                content2<br/>
+                content2<br/>
+                content2<br/>
+                content2<br/>
+            </div>
+            <div id="panel3" class="panel">
+                content3<br/>
+                content3<br/>
+                content3<br/>
+                content3<br/>
+                content3<br/>
+            </div>
+            <div id="panel4" class="panel">
+                content4<br/>
+                content4<br/>
+                content4<br/>
+                content4<br/>
+                content4<br/>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.tab-panels ul.tabs li').on('click', function(){
+                    // remove and add class 'active'
+                    $('.tab-panels ul.tabs li.active').removeClass('active');
+                    $(this).addClass('active');
+                    // get id of the panel needs to be shown
+                    var panelToShow = $(this).attr('rel');
+                    // hide current centent panel
+                    $('.tab-panels .panel.active').slideUp(300, newPanel);
+
+                    function newPanel(){
+                        $(this).removeClass('active');
+                        $('#'+panelToShow).slideDown(300, function(){
+                            $(this).addClass('active');
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
