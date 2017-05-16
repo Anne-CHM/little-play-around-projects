@@ -1,0 +1,101 @@
+<!-- This is a jQuery practice based on LearnCode.academy tutorial.  -->
+<!-- watch the tutorial video at https://www.youtube.com/watch?v=KkzVFB3Ba_o -->
+<!-- read the original code at http://jsfiddle.net/EjZzs/2050/ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>picture slides</title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <style media="screen">
+            div#slider {
+                box-shadow: 4px 4px 8px #666;
+                width: 480px;
+                height: 320px;
+                overflow: hidden;
+            }
+            div#slider ul.slides {
+                display: block;
+                width: 6000px;
+                height: 320px;
+                margin: 0;
+                padding: 0;
+            }
+            span.title {
+                opacity: 0.9;
+                display: block;
+                margin-top: 250px;
+            }
+            ul.slides .slide {
+                color: #fff;
+                font-family: Helvetica;
+                font-size: 2.5rem;
+                font-weight: 300;
+                text-align: center;
+                list-style-type: none;
+                float: left;
+                width: 480px;
+                height: 320px;
+            }
+            .slide1 {background-color: #CE2D4F;}
+            .slide2 {background-color: #CE6D8B;}
+            .slide3 {background-color: #9EA3B0;}
+            .slide4 {background-color: #FAE1DF;}
+            .slide5 {background-color: #E4C3AD;}          }
+        </style>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // cache DOM
+                var $slider = $("#slider");
+                var $slideContainer = $slider.find(".slides");
+                var $slides = $slideContainer.find(".slide");
+
+                // set variables
+                var pictureWidth = "480px";
+                var animationSpeed = 1000;
+                var pauseTime = 2500;
+                var currentSlide = 1;
+                var myInterval;
+                // make picture move
+                // setInterval(fn, 1000)
+                // $(selector).animate(obj. speedtime, callback)
+                function startSlide() {
+                    myInterval = setInterval(function() {
+                        $slideContainer.animate({"margin-left": "-=" + pictureWidth}, animationSpeed, function(){
+                            currentSlide++;
+                            if(currentSlide === $slides.length) {
+                                $slideContainer.css("margin-left", 0);
+                                currentSlide = 1;
+                            }
+                        });
+                    },pauseTime);
+                }
+
+                function pauseSlide() {
+                    clearInterval(myInterval);
+                }
+                $slideContainer.on("mouseenter", pauseSlide).on("mouseleave", startSlide);
+                // START
+                startSlide();
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>jQuery Basic Slider</h1>
+            </div>
+
+            <div id="slider">
+                <ul class="slides">
+                    <li class="slide slide1"><span class="title">#CE2D4F</span></li>
+                    <li class="slide slide2"><span class="title">#CE6D8B</span></li>
+                    <li class="slide slide3"><span class="title">#9EA3B0</span></li>
+                    <li class="slide slide4"><span class="title">#FAE1DF</span></li>
+                    <li class="slide slide5"><span class="title">#E4C3AD</span></li>
+                    <li class="slide slide1"><span class="title">#CE2D4F</span></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>
