@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>canvas clock</title>
+        <style media="screen">
+            #timeZone {
+                text-align: center;
+                padding-top: 50px;
+                font-family: fantasy;
+                font-size: 3rem;
+            }
+
+            canvas {
+                position: relative;;
+                margin-top: 10%;
+                left: 30%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="timeZone"></div>
+
+        <canvas id="canvas" width="300" height="300"></canvas>
+
+        <script type="text/javascript">
+            // set up
+            var myCanvas = document.getElementById('canvas');
+            var clock = myCanvas.getContext('2d');
+
+            // set variables
+            var height = clock.canvas.height;
+            var width = clock.canvas.width;
+            var r = width / 2;
+
+            // 背景图
+            function drawClock() {
+                clock.save();
+                clock.translate(r, r);
+
+                // 时钟外圈
+                clock.lineWidth = 10;
+                clock.beginPath();
+                clock.arc(0, 0, r-5, 0, 2 * Math.PI, false);
+                clock.stroke();
+
+                // 12个小时的数字
+                clock.font = '18px Helvetica';
+                var hourNumbers = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2];
+                hourNumbers.forEach(function(num, i) {
+                    // 30角度换算成弧度的公式： 2*PI/12
+                    var textRad = 2 * Math.PI / 12 * i;
+                    var textX = Math.cos(textRad) * (r - 34);
+                    var textY = Math.sin(textRad) * (r - 34);
+                    clock.fillText(num, textX, textY);
+                    clock.textAlign = 'center';
+                    clock.textBaseline = 'middle';
+                });
+
+                // 数字后面的圆点
+                for (var i = 0; i < 60; i++) {
+                    var dotRad = 2 * Math.PI / 60 * i;
+                    var dotX = Math.cos(dotRad) * (r - 18);
+                    var dotY = Math.sin(dotRad) * (r - 18);
+                    clock.beginPath();
+                    if (i%5 !== 0) {
+                        clock.fillStyle = '#ccc';
+                        clock.arc(dotX, dotY, 2, 0, 2 * Math.PI, false);
+                        clock.fill();
+                    }
+                    else{
+                        clock.fillStyle = '#000';
+                        clock.arc(dotX, dotY, 3, 0, 2 * Math.PI, false);
+                        clock.fill();
+                    }
+                    clock.closePath();
+                }
+            }
+
+            // 时针
+            function drawHour(hour, minute, second) {
+                clock.save();
+
+                clock.beginPath();
+                var hourRad = 2 * Math.PI / 12 * hour;
+                var minuteRad = 2 * Math.PI / 12 / 60 * minute;
+                clock.rotate(hourRad + minuteRad);
+                clock.lineWidth = 8;
+                clock.moveTo(0, 0)
+                clock.lineTo(0, - r + 60);
+                clock.lineCap = 'round';
+                clock.lineJoin = 'round';
+                clock.stroke();
+
+                clock.restore();
+            }
+
+            // 分针
+            function drawMinute(minute, second) {
+                clock.save();
+
+                clock.beginPath();
+                var minuteRad = 2 * Math.PI / 60 * minute;
+                var secondRad = 2 * Math.PI / 60 / 60 * second;
+                clock.rotate(minuteRad + secondRad);
+                // why can't work?
+                clock.fillStyle = '#aaa';
+                clock.lineWidth = 7;
+                clock.moveTo(-4, 0);
+                clock.lineTo(4, 0);
+                clock.lineTo(2, - r + 40);
+                clock.lineTo(-2, - r + 40);
+                clock.lineJoin = 'round';
+                clock.fill();
+
+                clock.restore();
+            }
+
+            // 秒针
+            function drawSecond(second) {
+                clock.save();
+
+                clock.beginPath();
+                clock.fillStyle = '#c14543';
+                var secondRad = 2 * Math.PI / 60 * second;
+                clock.rotate(secondRad);
+                clock.lineWidth = 4;
+                clock.moveTo(-2, 20);
+                clock.lineTo(2, 20);
+                clock.lineTo(1, - r + 18);
+                clock.lineTo(-1, - r + 18);
+                clock.fill();
+
+                clock.restore();
+            }
+
+            function startClock() {
+                clock.clearRect(0, 0, width, height);
+                var time = new Date();
+                var year = time.getFullYear();
+                var month = time.getMonth();
+                var day = time.getDate();
+                var hour = time.getHours();
+                var minute = time.getMinutes();
+                var second = time.getSeconds();
+                // 在时钟上方显示文字时间
+                var timeZone = document.getElementById('timeZone');
+                timeZone.innerHTML = 'Today is ' + year +'/' + month + '/' + day + '<br>'
+                                      + 'Now is ' + hour + ':' + minute + ':' + second;
+                drawClock();
+                drawMinute(minute, second);
+                drawHour(hour, minute);
+                drawSecond(second);
+                clock.restore();
+            }
+
+            setInterval(startClock, 1000);
+
+        </script>
+    </body>
+</html>
